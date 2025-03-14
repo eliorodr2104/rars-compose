@@ -278,7 +278,7 @@ public class Globals {
     public ArrayList<SyscallNumberOverride> getSyscallOverrides() {
         ArrayList<SyscallNumberOverride> overrides = new ArrayList<>();
         Properties properties = PropertiesFile.loadPropertiesFromFile(syscallPropertiesFile);
-        Enumeration keys = properties.keys();
+        Enumeration<Object> keys = properties.keys();
         while (keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
             overrides.add(new SyscallNumberOverride(key, properties.getProperty(key)));

@@ -135,6 +135,8 @@ public class Launch {
     public static void main(String[] args){
         new Launch(args);
     }
+
+
     private Launch(String[] args) {
         Globals.initialize();
 
@@ -231,12 +233,15 @@ public class Launch {
 
     private void launchIDE() {
         // System.setProperty("apple.laf.useScreenMenuBar", "true"); // Puts RARS menu on Mac OS menu bar
+
         SwingUtilities.invokeLater(
                 new Runnable() {
                     public void run() {
                         //Turn off metal's use of bold fonts
                         //UIManager.put("swing.boldMetal", Boolean.FALSE);
-                        new VenusUI("RARS " + Globals.version, filenameList);
+                        //new VenusUI("RARS " + Globals.version, filenameList);
+
+                        System.out.println("Launching IDE...");
                     }
                 });
     }
@@ -257,6 +262,7 @@ public class Launch {
         programArgumentList = null;
         if (args.length == 0)
             return true; // should not get here...
+
         // If the option to display RARS messages to standard erro is used,
         // it must be processed before any others (since messages may be
         // generated during option parsing).
@@ -266,6 +272,7 @@ public class Launch {
             displayHelp();
             return false;
         }
+
         for (int i = 0; i < args.length; i++) {
             // We have seen "pa" switch, so all remaining args are program args
             // that will become "argc" and "argv" for the program.
@@ -278,10 +285,11 @@ public class Launch {
             }
             // Once we hit "pa", all remaining command args are assumed
             // to be program arguments.
-            if (args[i].toLowerCase().equals("pa")) {
+            if (args[i].equalsIgnoreCase("pa")) {
                 inProgramArgumentList = true;
                 continue;
             }
+
             // messages-to-standard-error switch already processed, so ignore.
             if (args[i].toLowerCase().equals(displayMessagesToErrSwitch)) {
                 continue;
@@ -290,6 +298,7 @@ public class Launch {
             if (args[i].toLowerCase().equals(noCopyrightSwitch)) {
                 continue;
             }
+
             if (args[i].toLowerCase().equals("dump")) {
                 if (args.length <= (i + 3)) {
                     out.println("Dump command line argument requires a segment, format and file name.");
@@ -302,6 +311,7 @@ public class Launch {
                 }
                 continue;
             }
+
             if (args[i].toLowerCase().equals("mc")) {
                 String configName = args[++i];
                 MemoryConfiguration config = MemoryConfigurations.getConfigurationByName(configName);
@@ -313,6 +323,7 @@ public class Launch {
                 }
                 continue;
             }
+
             // Set RARS exit code for assemble error
             if (args[i].toLowerCase().indexOf("ae") == 0) {
                 String s = args[i].substring(2);
@@ -323,6 +334,7 @@ public class Launch {
                     // Let it fall thru and get handled by catch-all
                 }
             }
+
             // Set RARS exit code for simulate error
             if (args[i].toLowerCase().indexOf("se") == 0) {
                 String s = args[i].substring(2);
@@ -333,6 +345,7 @@ public class Launch {
                     // Let it fall thru and get handled by catch-all
                 }
             }
+
             if (args[i].toLowerCase().equals("d")) {
                 Globals.debug = true;
                 continue;
@@ -447,7 +460,6 @@ public class Launch {
     //////////////////////////////////////////////////////////////////////
     // Carry out the rars command: assemble then optionally run
     // Returns false if no simulation (run) occurs, true otherwise.
-
     private Program runCommand() {
         if (filenameList.size() == 0) {
             return null;
@@ -607,21 +619,12 @@ public class Launch {
     //////////////////////////////////////////////////////////////////////
     // Formats int value for display: decimal, hex, ascii
     private String formatIntForDisplay(int value) {
-        String strValue;
-        switch (displayFormat) {
-            case DECIMAL:
-                strValue = "" + value;
-                break;
-            case HEXADECIMAL:
-                strValue = Binary.intToHexString(value);
-                break;
-            case ASCII:
-                strValue = Binary.intToAscii(value);
-                break;
-            default:
-                strValue = Binary.intToHexString(value);
-        }
-        return strValue;
+        return switch (displayFormat) {
+            case DECIMAL -> "" + value;
+            case HEXADECIMAL -> Binary.intToHexString(value);
+            case ASCII -> Binary.intToAscii(value);
+            default -> Binary.intToHexString(value);
+        };
     }
 
     //////////////////////////////////////////////////////////////////////

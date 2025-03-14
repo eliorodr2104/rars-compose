@@ -59,6 +59,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 public class VenusUI extends JFrame {
     VenusUI mainUI;
+
     public JMenuBar menu;
     private JToolBar toolbar;
     private MainPane mainPane;
@@ -80,6 +81,7 @@ public class VenusUI extends JFrame {
 
     // components of the menubar
     private JMenu file, run, window, help, edit, settings;
+
     private JMenuItem fileNew, fileOpen, fileClose, fileCloseAll, fileSave, fileSaveAs, fileSaveAll, fileDumpMemory, fileExit;
     private JMenuItem editUndo, editRedo, editCut, editCopy, editPaste, editFindReplace, editSelectAll;
     private JMenuItem runGo, runStep, runBackstep, runReset, runAssemble, runStop, runPause, runClearBreakpoints, runToggleBreakpoints;
@@ -123,6 +125,7 @@ public class VenusUI extends JFrame {
 
     public VenusUI(String name, ArrayList<String> paths) {
         super(name);
+
         mainUI = this;
         Globals.setGui(this);
         this.editor = new Editor(this);
@@ -149,10 +152,12 @@ public class VenusUI extends JFrame {
 
         //  image courtesy of NASA/JPL.
         URL im = this.getClass().getResource(Globals.imagesPath + "RISC-V.png");
+
         if (im == null) {
             System.out.println("Internal Error: images folder or file not found");
             System.exit(0);
         }
+
         Image mars = Toolkit.getDefaultToolkit().getImage(im);
         this.setIconImage(mars);
         // Everything in frame will be arranged on JPanel "center", which is only frame component.
@@ -262,18 +267,21 @@ public class VenusUI extends JFrame {
                     editor.newFile();
                 }
             };
+
             fileOpenAction = new GuiAction("Open ...", loadIcon("Open22.png"),
                     "Open a file for editing", KeyEvent.VK_O, makeShortcut(KeyEvent.VK_O)) {
                 public void actionPerformed(ActionEvent e) {
                     editor.open();
                 }
             };
+
             fileCloseAction = new GuiAction("Close", null, "Close the current file", KeyEvent.VK_C,
                     makeShortcut(KeyEvent.VK_W)) {
                 public void actionPerformed(ActionEvent e) {
                     editor.close();
                 }
             };
+
             fileCloseAllAction = new GuiAction("Close All", null, "Close all open files",
                     KeyEvent.VK_L, null) {
                 public void actionPerformed(ActionEvent e) {
@@ -286,21 +294,25 @@ public class VenusUI extends JFrame {
                     editor.save();
                 }
             };
+
             fileSaveAsAction = new GuiAction("Save as ...", loadIcon("SaveAs22.png"),
                     "Save current file with different name", KeyEvent.VK_A, null) {
                 public void actionPerformed(ActionEvent e) {
                     editor.saveAs();
                 }
             };
+
             fileSaveAllAction = new GuiAction("Save All", null, "Save all open files",
                     KeyEvent.VK_V, null) {
                 public void actionPerformed(ActionEvent e) {
                     editor.saveAll();
                 }
             };
+
             fileDumpMemoryAction = new FileDumpMemoryAction("Dump Memory ...", loadIcon("Dump22.png"),
                     "Dump machine code or data in an available format", KeyEvent.VK_D, makeShortcut(KeyEvent.VK_D),
                     mainUI);
+
             fileExitAction = new GuiAction("Exit", null, "Exit Rars", KeyEvent.VK_X, null) {
                 public void actionPerformed(ActionEvent e) {
                     if (editor.closeAll()) {
@@ -511,6 +523,7 @@ public class VenusUI extends JFrame {
 
     private JMenuBar setUpMenuBar() {
         JMenuBar menuBar = new JMenuBar();
+
         file = new JMenu("File");
         file.setMnemonic(KeyEvent.VK_F);
         edit = new JMenu("Edit");
@@ -551,9 +564,11 @@ public class VenusUI extends JFrame {
         file.add(fileSave);
         file.add(fileSaveAs);
         file.add(fileSaveAll);
-        if (DumpFormatLoader.getDumpFormats().size() > 0) {
+
+        if (!DumpFormatLoader.getDumpFormats().isEmpty()) {
             file.add(fileDumpMemory);
         }
+
         file.addSeparator();
         file.add(fileExit);
 
@@ -789,10 +804,7 @@ public class VenusUI extends JFrame {
             case FileStatus.NO_FILE:
                 setMenuStateInitial();
                 break;
-            case FileStatus.NEW_NOT_EDITED:
-                setMenuStateEditingNew();
-                break;
-            case FileStatus.NEW_EDITED:
+            case FileStatus.NEW_NOT_EDITED, FileStatus.NEW_EDITED:
                 setMenuStateEditingNew();
                 break;
             case FileStatus.NOT_EDITED:
