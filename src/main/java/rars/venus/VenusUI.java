@@ -199,7 +199,9 @@ public class VenusUI extends JFrame {
 
         // due to dependencies, do not set up menu/toolbar until now.
         this.createActionObjects();
+
         menu = this.setUpMenuBar();
+
         this.setJMenuBar(menu);
 
         toolbar = this.setUpToolBar();
@@ -524,43 +526,67 @@ public class VenusUI extends JFrame {
     private JMenuBar setUpMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
+        //
+        // SET UP APP BAR
+        //
+
         file = new JMenu("File");
         file.setMnemonic(KeyEvent.VK_F);
+
         edit = new JMenu("Edit");
         edit.setMnemonic(KeyEvent.VK_E);
+
         run = new JMenu("Run");
         run.setMnemonic(KeyEvent.VK_R);
+
         //window = new JMenu("Window");
         //window.setMnemonic(KeyEvent.VK_W);
         settings = new JMenu("Settings");
         settings.setMnemonic(KeyEvent.VK_S);
+
         help = new JMenu("Help");
         help.setMnemonic(KeyEvent.VK_H);
+
         // slight bug: user typing alt-H activates help menu item directly, not help menu
+
+        //
+        // SET UP BUTTONS TOOLS
+        //
 
         fileNew = new JMenuItem(fileNewAction);
         fileNew.setIcon(loadIcon("New16.png"));
+
         fileOpen = new JMenuItem(fileOpenAction);
         fileOpen.setIcon(loadIcon("Open16.png"));
+
         fileClose = new JMenuItem(fileCloseAction);
         fileClose.setIcon(loadIcon("MyBlank16.gif"));
+
         fileCloseAll = new JMenuItem(fileCloseAllAction);
         fileCloseAll.setIcon(loadIcon("MyBlank16.gif"));
+
         fileSave = new JMenuItem(fileSaveAction);
         fileSave.setIcon(loadIcon("Save16.png"));
+
         fileSaveAs = new JMenuItem(fileSaveAsAction);
         fileSaveAs.setIcon(loadIcon("SaveAs16.png"));
+
         fileSaveAll = new JMenuItem(fileSaveAllAction);
         fileSaveAll.setIcon(loadIcon("MyBlank16.gif"));
+
         fileDumpMemory = new JMenuItem(fileDumpMemoryAction);
         fileDumpMemory.setIcon(loadIcon("Dump16.png"));
+
         fileExit = new JMenuItem(fileExitAction);
         fileExit.setIcon(loadIcon("MyBlank16.gif"));
+
         file.add(fileNew);
         file.add(fileOpen);
         file.add(fileClose);
         file.add(fileCloseAll);
+
         file.addSeparator();
+
         file.add(fileSave);
         file.add(fileSaveAs);
         file.add(fileSaveAll);
@@ -574,16 +600,22 @@ public class VenusUI extends JFrame {
 
         editUndo = new JMenuItem(editUndoAction);
         editUndo.setIcon(loadIcon("Undo16.png"));//"Undo16.gif"));
+
         editRedo = new JMenuItem(editRedoAction);
         editRedo.setIcon(loadIcon("Redo16.png"));//"Redo16.gif"));
+
         editCut = new JMenuItem(editCutAction);
         editCut.setIcon(loadIcon("Cut16.gif"));
+
         editCopy = new JMenuItem(editCopyAction);
         editCopy.setIcon(loadIcon("Copy16.png"));//"Copy16.gif"));
+
         editPaste = new JMenuItem(editPasteAction);
         editPaste.setIcon(loadIcon("Paste16.png"));//"Paste16.gif"));
+
         editFindReplace = new JMenuItem(editFindReplaceAction);
         editFindReplace.setIcon(loadIcon("Find16.png"));//"Paste16.gif"));
+
         editSelectAll = new JMenuItem(editSelectAllAction);
         editSelectAll.setIcon(loadIcon("MyBlank16.gif"));
         edit.add(editUndo);

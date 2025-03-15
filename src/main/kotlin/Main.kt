@@ -701,9 +701,11 @@ fun main(args: Array<String>) = application {
         System.exit(Globals.exitCode)
 
     if (gui) {
-        Window(onCloseRequest = ::exitApplication) {
+        Window(
+            onCloseRequest = ::exitApplication,
+            title = "RARS ${Globals.version}"
+        ) {
             Home(
-                nameApp = "RARS " + Globals.version,
                 files   = filenameList!!
             )
         }

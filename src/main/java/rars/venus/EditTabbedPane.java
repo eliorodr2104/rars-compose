@@ -282,10 +282,11 @@ public class EditTabbedPane extends JTabbedPane {
         return false;
     }
 
-    // Save file associatd with specified edit pane.
+    // Save file associated with specified edit pane.
     // Returns true if save operation worked, else false.
     private boolean saveFile(EditPane editPane) {
         if (editPane != null) {
+
             if (editPane.isNew()) {
                 File theFile = saveAsFile(editPane);
                 if (theFile != null) {
@@ -293,7 +294,9 @@ public class EditTabbedPane extends JTabbedPane {
                 }
                 return (theFile != null);
             }
+
             File theFile = new File(editPane.getPathname());
+
             try {
                 BufferedWriter outFileStream = new BufferedWriter(new FileWriter(theFile));
                 outFileStream.write(editPane.getSource(), 0, editPane.getSource().length());

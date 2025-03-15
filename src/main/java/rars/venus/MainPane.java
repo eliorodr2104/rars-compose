@@ -64,9 +64,11 @@ public class MainPane extends JTabbedPane {
         this.mainUI = appFrame;
 
         this.setTabPlacement(JTabbedPane.TOP); //LEFT);
+
         if (this.getUI() instanceof BasicTabbedPaneUI) {
             BasicTabbedPaneUI ui = (BasicTabbedPaneUI) this.getUI();
         }
+
         editTabbedPane = new EditTabbedPane(appFrame, editor, this);
         executeTab = new ExecutePane(appFrame, regs, cop1Regs, cop0Regs);
         String editTabTitle = "Edit";
